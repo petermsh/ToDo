@@ -2,6 +2,9 @@
 
 namespace ToDo.Domain.Repositories;
 
+/// <summary>
+/// Interface contains CRUD operations for ToDoTasks
+/// </summary>
 public interface IToDoTaskRepository
 {
     Task<ToDoTask> GetAsync(Guid id, CancellationToken cancellationToken);
