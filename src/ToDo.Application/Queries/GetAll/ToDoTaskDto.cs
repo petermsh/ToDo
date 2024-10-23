@@ -8,4 +8,5 @@ public class ToDoTaskDto
     public Guid Id { get; set; }
     public string Title { get; set; }
     public int CompletionPercentage { get; set; }
+    public DateTimeOffset ExpiryAt { get; set; }
 }

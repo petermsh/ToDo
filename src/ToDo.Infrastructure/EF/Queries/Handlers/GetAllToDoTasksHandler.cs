@@ -11,7 +11,7 @@ namespace ToDo.Infrastructure.EF.Queries.Handlers;
 internal sealed class GetAllToDoTasksHandler(ToDoDbContext dbContext) 
     : IRequestHandler<GetAllToDoTasksQuery, IEnumerable<ToDoTaskDto>>
 {
-    public async Task<IEnumerable<ToDoTaskDto>> Handle(GetAllToDoTasksQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<ToDoTaskDto>> Handle(GetAllToDoTasksQuery query, CancellationToken cancellationToken)
         => await dbContext.ToDoTasks
             .Select(t => t.AsDto())
             .AsNoTracking()
