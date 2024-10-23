@@ -7,8 +7,6 @@ public class ToDoTask : BaseEntity
     public DateTimeOffset ExpiryAt { get; private set; }
     public string Title { get; private set; }
     public string Description { get; private set; }
-    
-    [Range(0, 100)]
     public int CompletionPercentage { get; private set; }
 
     private ToDoTask(DateTimeOffset expiryAt, string title, string description, int completionPercentage)

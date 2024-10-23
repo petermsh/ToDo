@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ToDo.Application.Services;
+using Microsoft.Extensions.Hosting;
 using ToDo.Domain.Repositories;
 using ToDo.Infrastructure.EF.Postgres;
-using ToDo.Infrastructure.EF.Services;
 using ToDo.Infrastructure.Repositories;
 
 namespace ToDo.Infrastructure;
@@ -19,17 +19,35 @@ public static class Extensions
         //Add Swagger
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-        services.AddControllers();
+        
+        // Add option to display enum values
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+            });;
      
         // Add MediatR and search for handlers to registry
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         
         // AddRepositories
         services.AddScoped<IToDoTaskRepository, ToDoTaskRepository>();
-        services.AddScoped<IToDoTasksReadService, ToDoTasksReadService>();
         
         // Add Postgres
         services.AddPostgres(configuration);
         return services;
+    }
+    
+    public static WebApplication UseInfrastructure(this WebApplication app)
+    {
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        
+        app.MapControllers();
+        
+        return app;
     }
 }
