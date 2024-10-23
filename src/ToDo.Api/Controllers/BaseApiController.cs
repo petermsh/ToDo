@@ -18,4 +18,7 @@ public class BaseApiController : ControllerBase
     // Property thar retrieves IMediator service from the HttpContext
     protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
     
+    // Method for returning endpoints data
+    protected ActionResult<TResult> OkOrNotFound<TResult>(TResult result)
+        => result is null ? NotFound() : Ok(result);
 }

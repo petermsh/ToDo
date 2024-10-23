@@ -20,6 +20,9 @@ public static class Extensions
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddControllers();
+     
+        // Add MediatR and search for handlers to registry
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         
         // AddRepositories
         services.AddScoped<IToDoTaskRepository, ToDoTaskRepository>();
