@@ -1,4 +1,5 @@
-﻿using ToDo.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ToDo.Domain.Entities;
 using ToDo.Domain.Repositories;
 using ToDo.Infrastructure.EF;
 
@@ -11,10 +12,8 @@ namespace ToDo.Infrastructure.Repositories;
 internal sealed class ToDoTaskRepository(ToDoDbContext dbContext) : IToDoTaskRepository
 {
     // Get a ToDoTask by its ID
-    public Task<ToDoTask> GetAsync(Guid id, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<ToDoTask> GetAsync(Guid id, CancellationToken cancellationToken)
+        => await dbContext.ToDoTasks.SingleOrDefaultAsync(t => t.Id == id, cancellationToken);
 
     // Add a new ToDoTask to the database
     public async Task AddAsync(ToDoTask toDoTask, CancellationToken cancellationToken)
@@ -24,14 +23,16 @@ internal sealed class ToDoTaskRepository(ToDoDbContext dbContext) : IToDoTaskRep
     }
     
     // Update an existing ToDoTask
-    public Task UpdateAsync(ToDoTask toDoTask, CancellationToken cancellationToken)
+    public async Task UpdateAsync(ToDoTask toDoTask, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        dbContext.ToDoTasks.Update(toDoTask);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 
     // Delete a ToDoTask
-    public Task DeleteAsync(ToDoTask toDoTask, CancellationToken cancellationToken)
+    public async Task DeleteAsync(ToDoTask toDoTask, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        dbContext.ToDoTasks.Remove(toDoTask);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

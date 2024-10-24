@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDo.Application.Commands.CreateToDoTask;
+using ToDo.Application.Commands.UpdateToDoTask;
 using ToDo.Application.Queries.GetAll;
 using ToDo.Application.Queries.GetIncoming;
 using ToDo.Application.Queries.GetSpecific;
@@ -31,4 +32,14 @@ public sealed class ToDoTasksController : BaseApiController
     public async Task<ActionResult<IEnumerable<ToDoTaskDto>>> GetIncomingToDoTasks([FromQuery] TimeFilter filter)
         => OkOrNotFound(await Mediator.Send(new GetIncomingToDoTasksQuery() { TimeFiler = filter }));
 
+    [HttpPut("{id:guid}")]
+
+    public async Task UpdateToDoTask([FromRoute] Guid id, UpdateToDoTaskData data)
+        => await Mediator.Send(new UpdateToDoTaskCommand
+            {
+                Id = id, 
+                Title = data.title,
+                Description = data.description,
+                ExpiryAt = data.expiryAt
+            });
 }

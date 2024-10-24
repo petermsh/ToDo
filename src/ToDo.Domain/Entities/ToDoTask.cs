@@ -18,7 +18,17 @@ public class ToDoTask : BaseEntity
         CompletionPercentage = completionPercentage;
     }
 
+    // Method for creating ToDoTask
     public static ToDoTask Create(string title, string description, DateTimeOffset expiryAt, int completionPercentage)
         => new(expiryAt, title, description, completionPercentage);
 
+
+    // Method for updating ToDoTask info
+    public void Update(string title, string description, DateTimeOffset expiryAt)
+    {
+        Title = title;
+        Description = description;
+        ExpiryAt = expiryAt;
+        ModifiedAt = DateTimeOffset.UtcNow;
+    }
 }
