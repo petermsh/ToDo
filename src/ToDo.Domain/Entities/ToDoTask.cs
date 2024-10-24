@@ -34,5 +34,15 @@ public class ToDoTask : BaseEntity
     
     //Method for setting CompletionPercentage
     public void SetCompletionPercentage(int completionPercentage)
-        => CompletionPercentage = completionPercentage;
+    {
+        CompletionPercentage = completionPercentage;
+        ModifiedAt = DateTimeOffset.UtcNow;
+    }
+
+    //Method for marking ToDoTask as done
+    public void MarkAsDone()
+    {
+        CompletionPercentage = 100;
+        ModifiedAt = DateTimeOffset.UtcNow;
+    }
 }

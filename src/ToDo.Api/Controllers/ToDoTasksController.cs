@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDo.Application.Commands.CreateToDoTask;
 using ToDo.Application.Commands.DeleteToDoTask;
+using ToDo.Application.Commands.MarkToDoTaskAsDone;
 using ToDo.Application.Commands.SetToDoTaskCompletionPercentage;
 using ToDo.Application.Commands.UpdateToDoTask;
 using ToDo.Application.Queries.GetAll;
@@ -50,6 +51,10 @@ public sealed class ToDoTasksController : BaseApiController
     [HttpPatch("{id:guid}")]
     public async Task SetCompletionPercentage([FromRoute] Guid id, int completionPercentage)
         => await Mediator.Send(new SetToDoTaskCompletionPercentageCommand {Id = id, CompletionPercentage = completionPercentage });
+    
+    [HttpPatch("markAsDone/{id:guid}")]
+    public async Task MarkAsDone([FromRoute] Guid id)
+        => await Mediator.Send(new MarkToDoTaskAsDoneCommand(id));
 
     [HttpDelete("{id:guid}")]
     public async Task DeleteToDoTask([FromRoute] Guid id)
