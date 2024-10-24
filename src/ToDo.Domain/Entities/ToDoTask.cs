@@ -31,4 +31,8 @@ public class ToDoTask : BaseEntity
         ExpiryAt = expiryAt;
         ModifiedAt = DateTimeOffset.UtcNow;
     }
+    
+    //Method for setting CompletionPercentage
+    public void SetCompletionPercentage(int completionPercentage)
+        => CompletionPercentage = completionPercentage;
 }
