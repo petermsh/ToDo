@@ -10,8 +10,8 @@ public class SetToDoTaskCompletionPercentageValidator : AbstractValidator<SetToD
     public SetToDoTaskCompletionPercentageValidator()
     {
         RuleFor(t => t.CompletionPercentage)
-            .GreaterThanOrEqualTo(MinimumCompletionPercentageValue).WithMessage($"Completion percentage must be greater than {MinimumCompletionPercentageValue}");
-        RuleFor(t => t.CompletionPercentage)
+            .NotEmpty()
+            .GreaterThanOrEqualTo(MinimumCompletionPercentageValue).WithMessage($"Completion percentage must be greater than {MinimumCompletionPercentageValue}")
             .LessThanOrEqualTo(MaximumCompletionPercentageValue).WithMessage($"Completion percentage must be less than {MaximumCompletionPercentageValue}");
     }
 }
