@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using ToDo.Application.Commands.CreateToDoTask;
 using ToDo.Application.Commands.DeleteToDoTask;
 using ToDo.Application.Commands.MarkToDoTaskAsDone;
@@ -52,10 +53,12 @@ public sealed class ToDoTasksController : BaseApiController
     public async Task SetCompletionPercentage([FromRoute] Guid id, int completionPercentage)
         => await Mediator.Send(new SetToDoTaskCompletionPercentageCommand {Id = id, CompletionPercentage = completionPercentage });
     
+    // Endpoint for marking ToDoTask as done
     [HttpPatch("markAsDone/{id:guid}")]
     public async Task MarkAsDone([FromRoute] Guid id)
         => await Mediator.Send(new MarkToDoTaskAsDoneCommand(id));
 
+    // Encpoint for deleting ToDoTask
     [HttpDelete("{id:guid}")]
     public async Task DeleteToDoTask([FromRoute] Guid id)
         => await Mediator.Send(new DeleteToDoTaskCommand(id));

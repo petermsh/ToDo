@@ -2,5 +2,5 @@
 
 namespace ToDo.Application.Exceptions;
 
-public class InvalidTimeFilter() 
+public class InvalidTimeFilterException() 
     : ToDoException("Invalid time filter");

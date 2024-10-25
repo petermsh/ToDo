@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using ToDo.Application.Exceptions.Middleware;
 
@@ -13,6 +14,9 @@ public static class Extensions
     {
         // Add MediatR and search for handlers to registry
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+        // Add validators
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         
         return services;
     }

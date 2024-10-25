@@ -30,7 +30,7 @@ internal sealed class GetIncomingToDoTasksHandler(ToDoDbContext dbContext)
             TimeFilter.Today => now.Date.AddDays(1).AddTicks(-1).ToUniversalTime(),
             TimeFilter.Tomorrow => now.Date.AddDays(2).AddTicks(-1).ToUniversalTime(),
             TimeFilter.CurrentWeek => now.Date.AddDays(-(int)now.DayOfWeek).AddDays(7).AddTicks(-1).ToUniversalTime(),
-            _ => throw new InvalidTimeFilter()
+            _ => throw new InvalidTimeFilterException()
         };
         
         // Select todos ending before selected period

@@ -23,9 +23,20 @@ public class ExceptionMiddleware : IMiddleware
 
             // Set error code based by exception type
             var errorCode = ToUnderscoreCase(ex.GetType().Name.Replace("Exception", string.Empty));
-            // Make json response
-            var json = JsonSerializer.Serialize(new {ErrorCode = errorCode, ex.Message});
+            // Create json response
+            var json = JsonSerializer.Serialize(new { ErrorCode = errorCode, ex.Message });
             // Send error message
+            await context.Response.WriteAsync(json);
+        }
+        catch (ValidationException ex)
+        {
+            // Set response code and response type
+            context.Response.StatusCode = 400;
+            context.Response.Headers.Add("Content-Type", "application/json");
+
+            // Create json response
+            var json = JsonSerializer.Serialize(new { Errors = ex.ErrorMessages });
+            //Send error message
             await context.Response.WriteAsync(json);
         }
     }
