@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ToDo.Application.Exceptions.Middleware;
 using ToDo.Domain.Repositories;
 using ToDo.Infrastructure.EF.Postgres;
 using ToDo.Infrastructure.Repositories;
@@ -19,6 +20,9 @@ public static class Extensions
         //Add Swagger
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+        
+        //Add exception middleware
+        services.AddScoped<ExceptionMiddleware>();
         
         // Add option to display enum values
         services.AddControllers()
@@ -45,6 +49,9 @@ public static class Extensions
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        
+        // Use exception middleware
+        app.UseMiddleware<ExceptionMiddleware>();
         
         app.MapControllers();
         

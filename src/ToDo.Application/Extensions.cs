@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using ToDo.Application.Exceptions.Middleware;
 
 namespace ToDo.Application;
 
@@ -12,7 +13,7 @@ public static class Extensions
     {
         // Add MediatR and search for handlers to registry
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
+        
         return services;
     }
 }
