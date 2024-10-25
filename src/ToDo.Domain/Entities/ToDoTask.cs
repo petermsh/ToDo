@@ -17,10 +17,22 @@ public class ToDoTask : BaseEntity
         Description = description;
         CompletionPercentage = completionPercentage;
     }
+    
+    private ToDoTask(Guid id, DateTimeOffset expiryAt, string title, string description, int completionPercentage)
+    {
+        Id = id;
+        ExpiryAt = expiryAt;
+        Title = title;
+        Description = description;
+        CompletionPercentage = completionPercentage;
+    }
 
     // Method for creating ToDoTask
     public static ToDoTask Create(string title, string description, DateTimeOffset expiryAt, int completionPercentage)
         => new(expiryAt, title, description, completionPercentage);
+    
+    public static ToDoTask CreateWithId(Guid id, string title, string description, DateTimeOffset expiryAt, int completionPercentage)
+        => new(id, expiryAt, title, description, completionPercentage);
 
 
     // Method for updating ToDoTask info

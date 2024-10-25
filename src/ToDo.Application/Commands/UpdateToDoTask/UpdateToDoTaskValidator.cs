@@ -14,5 +14,9 @@ public class UpdateToDoTaskValidator : AbstractValidator<UpdateToDoTaskCommand>
         
         RuleFor(t => t.Description)
             .MaximumLength(MaximumDescriptionLength).WithMessage($"The length of the description must be less than {MaximumDescriptionLength}");
+        
+        RuleFor(t => t.ExpiryAt)
+            .NotEmpty()
+            .GreaterThan(DateTime.UtcNow).WithMessage($"Expiry date must be later than current date and time");
     }
 }
